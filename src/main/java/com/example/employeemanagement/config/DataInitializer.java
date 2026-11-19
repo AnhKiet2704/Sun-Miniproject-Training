@@ -26,10 +26,10 @@ public class DataInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(DepartmentRepository departmentRepository,
-                           EmployeeRepository employeeRepository,
-                           UserRepository userRepository,
-                           EmployeeService employeeService,
-                           PasswordEncoder passwordEncoder) {
+            EmployeeRepository employeeRepository,
+            UserRepository userRepository,
+            EmployeeService employeeService,
+            PasswordEncoder passwordEncoder) {
         this.departmentRepository = departmentRepository;
         this.employeeRepository = employeeRepository;
         this.userRepository = userRepository;
@@ -47,11 +47,11 @@ public class DataInitializer implements CommandLineRunner {
 
         if (employeeRepository.count() == 0) {
             employeeService.createEmployee(new EmployeeRequestDTO(
-                    "Nguyen Van An", "an.nguyen@gmail.com", "IT", "Backend Developer", 1500.0));
+                    "Nguyen Van An", "an.nguyen@example.com", "IT", "Backend Developer", 1500.0));
             employeeService.createEmployee(new EmployeeRequestDTO(
-                    "Tran Thi Binh", "binh.tran@gmail.com", "HR", "HR Specialist", 1200.0));
+                    "Tran Thi Binh", "binh.tran@example.com", "HR", "HR Specialist", 1200.0));
             employeeService.createEmployee(new EmployeeRequestDTO(
-                    "Le Van Cuong", "cuong.le@gmail.com", "IT", "DevOps Engineer", 1800.0));
+                    "Le Van Cuong", "cuong.le@example.com", "IT", "DevOps Engineer", 1800.0));
         }
 
         createUserIfMissing("admin", "admin123", Role.ROLE_ADMIN);
