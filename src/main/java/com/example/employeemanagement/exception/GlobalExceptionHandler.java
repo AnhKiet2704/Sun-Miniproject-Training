@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 // Module 5: Global Exception Handling. Chỉ áp dụng cho các @RestController (API JSON);
-// các trang Thymeleaf dùng cơ chế xử lý lỗi mặc định của Spring MVC.
+
 @RestControllerAdvice(annotations = RestController.class)
 public class GlobalExceptionHandler {
 

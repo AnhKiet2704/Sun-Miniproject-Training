@@ -1,6 +1,6 @@
 package com.example.employeemanagement.dto;
 
-// Module 10: phân tích lương theo phòng ban (trung bình / nhỏ nhất / lớn nhất)
+// Module 10: phân tích lương theo phòng ban 
 public class SalaryAnalyticsDTO {
 
     private String department;

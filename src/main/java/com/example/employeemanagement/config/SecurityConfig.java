@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-// Module 9: Spring Security (Basic + form login cho web, JWT cho REST API)
+// Module 9: Spring Security 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -41,7 +41,6 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    // JwtAuthenticationFilter chỉ chạy trong Security filter chain, không đăng ký thêm vào servlet container
     @Bean
     public FilterRegistrationBean<JwtAuthenticationFilter> jwtFilterRegistration(JwtAuthenticationFilter filter) {
         FilterRegistrationBean<JwtAuthenticationFilter> registration = new FilterRegistrationBean<>(filter);
@@ -54,7 +53,7 @@ public class SecurityConfig {
         RequestMatcher apiRequests = request -> request.getRequestURI().startsWith("/api/");
 
         http
-                // REST API dùng Basic/JWT (không có cookie) nên bỏ CSRF; form web vẫn được bảo vệ CSRF
+                
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/hello", "/api/hello", "/error").permitAll()
@@ -77,7 +76,7 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
                         .permitAll())
-                // API chưa đăng nhập -> 401 (thay vì redirect sang trang /login)
+               
                 .exceptionHandling(ex -> ex.defaultAuthenticationEntryPointFor(
                         new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), apiRequests))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 @Service
 public class UtilityService {
 
-    /** "  nguyen   van an " -> "Nguyen Van An" */
     public String normalizeName(String name) {
         if (name == null || name.isBlank()) {
             return "";
@@ -21,7 +20,7 @@ public class UtilityService {
                 .collect(Collectors.joining(" "));
     }
 
-    /** " it " -> "IT"; rỗng -> "GENERAL" */
+    
     public String formatDepartment(String department) {
         if (department == null || department.isBlank()) {
             return "GENERAL";

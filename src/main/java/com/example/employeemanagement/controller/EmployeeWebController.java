@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-// Module 6: Spring Boot Web (MVC + Thymeleaf)
+// Module 6: Spring Boot Web 
 @Controller
 @RequestMapping("/employees")
 public class EmployeeWebController {
@@ -110,7 +110,6 @@ public class EmployeeWebController {
         return "employee-form";
     }
 
-    // Xóa bằng POST (kèm CSRF token) thay vì GET để tránh bị xóa nhầm qua link/ảnh độc hại
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {

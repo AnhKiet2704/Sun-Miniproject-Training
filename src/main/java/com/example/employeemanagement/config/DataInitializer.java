@@ -14,7 +14,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-// Dữ liệu mẫu: phòng ban, nhân viên, tài khoản admin/user (chỉ tạo khi chưa có)
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -48,11 +47,11 @@ public class DataInitializer implements CommandLineRunner {
 
         if (employeeRepository.count() == 0) {
             employeeService.createEmployee(new EmployeeRequestDTO(
-                    "Nguyen Van An", "an.nguyen@example.com", "IT", "Backend Developer", 1500.0));
+                    "Nguyen Van An", "an.nguyen@gmail.com", "IT", "Backend Developer", 1500.0));
             employeeService.createEmployee(new EmployeeRequestDTO(
-                    "Tran Thi Binh", "binh.tran@example.com", "HR", "HR Specialist", 1200.0));
+                    "Tran Thi Binh", "binh.tran@gmail.com", "HR", "HR Specialist", 1200.0));
             employeeService.createEmployee(new EmployeeRequestDTO(
-                    "Le Van Cuong", "cuong.le@example.com", "IT", "DevOps Engineer", 1800.0));
+                    "Le Van Cuong", "cuong.le@gmail.com", "IT", "DevOps Engineer", 1800.0));
         }
 
         createUserIfMissing("admin", "admin123", Role.ROLE_ADMIN);

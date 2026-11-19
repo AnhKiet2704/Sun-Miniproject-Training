@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-// Module 9: trang đăng nhập / đăng ký (form login do Spring Security xử lý POST /login)
+// Module 9: trang đăng nhập / đăng ký 
 @Controller
 public class AuthWebController {
 

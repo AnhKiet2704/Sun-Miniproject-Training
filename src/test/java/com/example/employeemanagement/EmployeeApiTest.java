@@ -134,7 +134,7 @@ class EmployeeApiTest {
     void duplicateEmailReturns409() throws Exception {
         mockMvc.perform(post("/api/employees").with(httpBasic("admin", "admin123"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(employeeJson("Another One", "an.nguyen@example.com", "IT", "Dev", 1000)))
+                        .content(employeeJson("Another One", "an.nguyen@gmail.com", "IT", "Dev", 1000)))
                 .andExpect(status().isConflict());
     }
 
