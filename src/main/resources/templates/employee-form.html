@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nhân viên</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="topbar">
+    <div>
+        <strong>Employee Management</strong>
+        <span style="margin-left:24px">
+            <a th:href="@{/employees/list}">Danh sách</a>
+            <a th:href="@{/employees/statistics}">Thống kê</a>
+        </span>
+    </div>
+    <div class="right">
+        <form th:action="@{/logout}" method="post"><button class="small secondary" type="submit">Đăng xuất</button></form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card" style="max-width:600px">
+        <h1 th:text="${employeeId == null} ? 'Thêm nhân viên mới' : 'Cập nhật nhân viên'">Nhân viên</h1>
+
+        <form th:action="${employeeId == null} ? @{/employees/add} : @{/employees/edit/{id}(id=${employeeId})}"
+              th:object="${employee}" method="post">
+
+            <label for="name">Họ tên</label>
+            <input type="text" id="name" th:field="*{name}">
+            <div class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" th:field="*{email}">
+            <div class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+            <label for="department">Phòng ban (nhập tên mới để tự tạo phòng ban)</label>
+            <input type="text" id="department" th:field="*{department}" list="departmentOptions">
+            <datalist id="departmentOptions">
+                <option th:each="d : ${departments}" th:value="${d.name}"></option>
+            </datalist>
+            <div class="error-text" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></div>
+
+            <label for="position">Chức vụ</label>
+            <input type="text" id="position" th:field="*{position}">
+            <div class="error-text" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></div>
+
+            <label for="salary">Lương</label>
+            <input type="text" id="salary" th:field="*{salary}">
+            <div class="error-text" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+
+            <div class="form-actions">
+                <button type="submit">Lưu</button>
+                <a class="btn secondary" th:href="@{/employees/list}">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

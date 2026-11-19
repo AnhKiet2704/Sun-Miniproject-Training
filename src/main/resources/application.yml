@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: employee-management
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: false
+  # Module 8: Caching (Caffeine, TTL 1 phút)
+  cache:
+    type: caffeine
+    caffeine:
+      spec: expireAfterWrite=60s,maximumSize=100
+
+# Module 8: Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# Module 9: JWT (đổi secret bằng biến môi trường JWT_SECRET khi triển khai thật)
+app:
+  jwt:
+    secret: "${JWT_SECRET:dev-only-secret-please-change-dev-only-secret-0123456789abcdef}"
+    expiration-ms: 86400000

@@ -1,0 +1,21 @@
+# Profile prod: MySQL production. BẮT BUỘC đặt biến môi trường:
+#   DB_URL, DB_USERNAME, DB_PASSWORD, JWT_SECRET
+# Chạy: java -jar target/employee-management-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    show-sql: false
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+
+logging:
+  level:
+    root: WARN
+    com.example.employeemanagement: INFO

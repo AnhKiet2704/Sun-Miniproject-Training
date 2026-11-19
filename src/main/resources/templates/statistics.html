@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thống kê nhân viên</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="topbar">
+    <div>
+        <strong>Employee Management</strong>
+        <span style="margin-left:24px">
+            <a th:href="@{/employees/list}">Danh sách</a>
+            <a th:href="@{/employees/statistics}">Thống kê</a>
+        </span>
+    </div>
+    <div class="right">
+        <span th:text="${username}">user</span>
+        <form th:action="@{/logout}" method="post"><button class="small secondary" type="submit">Đăng xuất</button></form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h1>Thống kê nhân viên</h1>
+        <div class="stat-grid">
+            <div class="stat">
+                <div class="muted">Tổng số nhân viên</div>
+                <div class="num" th:text="${totalEmployees}">0</div>
+            </div>
+            <div class="stat">
+                <div class="muted">Số phòng ban</div>
+                <div class="num" th:text="${#lists.size(departmentStats)}">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Số lượng nhân viên theo phòng ban</h2>
+        <table>
+            <thead>
+            <tr><th>Phòng ban</th><th>Số nhân viên</th><th>Tỷ lệ</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="d : ${departmentStats}">
+                <td th:text="${d.department}">IT</td>
+                <td th:text="${d.count}">0</td>
+                <td>
+                    <div class="bar">
+                        <span th:style="'width:' + (${totalEmployees} gt 0 ? ${d.count} * 100 / ${totalEmployees} : 0) + '%'"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(departmentStats)}">
+                <td colspan="3" class="muted">Chưa có dữ liệu.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Phân tích lương theo phòng ban</h2>
+        <table>
+            <thead>
+            <tr><th>Phòng ban</th><th>Số NV</th><th>Lương TB</th><th>Thấp nhất</th><th>Cao nhất</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${salaryAnalytics}">
+                <td th:text="${s.department}">IT</td>
+                <td th:text="${s.employeeCount}">0</td>
+                <td th:text="${#numbers.formatDecimal(s.averageSalary, 1, 'COMMA', 2, 'POINT')}">0</td>
+                <td th:text="${#numbers.formatDecimal(s.minSalary, 1, 'COMMA', 2, 'POINT')}">0</td>
+                <td th:text="${#numbers.formatDecimal(s.maxSalary, 1, 'COMMA', 2, 'POINT')}">0</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(salaryAnalytics)}">
+                <td colspan="5" class="muted">Chưa có dữ liệu.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

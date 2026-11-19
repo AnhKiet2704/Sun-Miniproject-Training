@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Danh sách nhân viên</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="topbar">
+    <div>
+        <strong>Employee Management</strong>
+        <span style="margin-left:24px">
+            <a th:href="@{/employees/list}">Danh sách</a>
+            <a th:href="@{/employees/statistics}">Thống kê</a>
+            <a th:if="${isAdmin}" th:href="@{/employees/add}">Thêm nhân viên</a>
+        </span>
+    </div>
+    <div class="right">
+        <span th:text="${username} + (${isAdmin} ? ' (ADMIN)' : ' (USER)')">user</span>
+        <form th:action="@{/logout}" method="post"><button class="small secondary" type="submit">Đăng xuất</button></form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="alert success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+    <div class="card">
+        <h2>Tìm kiếm nhân viên</h2>
+        <form class="search" th:action="@{/employees/search}" method="get">
+            <div>
+                <label for="name">Tên</label>
+                <input type="text" id="name" name="name" th:value="${searchName}" placeholder="Nhập tên...">
+            </div>
+            <div>
+                <label for="department">Phòng ban</label>
+                <input type="text" id="department" name="department" th:value="${searchDepartment}"
+                       list="departmentOptions" placeholder="Nhập phòng ban...">
+                <datalist id="departmentOptions">
+                    <option th:each="d : ${departments}" th:value="${d.name}"></option>
+                </datalist>
+            </div>
+            <div style="flex:0">
+                <button type="submit">Tìm</button>
+                <a class="btn secondary" th:href="@{/employees/list}">Xóa lọc</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Danh sách nhân viên (<span th:text="${#lists.size(employees)}">0</span>)</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Mã NV</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Phòng ban</th>
+                <th>Chức vụ</th>
+                <th>Lương</th>
+                <th th:if="${isAdmin}">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${employees}">
+                <td th:text="${e.employeeCode}">EMP00001</td>
+                <td th:text="${e.name}">Name</td>
+                <td th:text="${e.email}">email</td>
+                <td th:text="${e.department}">IT</td>
+                <td th:text="${e.position}">Developer</td>
+                <td th:text="${#numbers.formatDecimal(e.salary, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+                <td class="actions" th:if="${isAdmin}">
+                    <a class="btn small" th:href="@{/employees/edit/{id}(id=${e.id})}">Sửa</a>
+                    <form th:action="@{/employees/delete/{id}(id=${e.id})}" method="post"
+                          onsubmit="return confirm('Bạn có chắc muốn xóa nhân viên này?');">
+                        <button class="small danger" type="submit">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(employees)}">
+                <td th:colspan="${isAdmin} ? 7 : 6" class="muted">Không có nhân viên nào.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
